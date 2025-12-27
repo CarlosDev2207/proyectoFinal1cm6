@@ -193,7 +193,7 @@ void generarReporteCuentas() {
 }
 
 // =============================================
-// 5. FUNCION PARA DEMOSTRAR LAS ESTRUCTURAS
+// 5. FUNCION PARA DEMOSTRAR LAS ESTRUCTURAS  - resumen de las variables implementadas -
 // =============================================
 
 void demostrarEstructuras() {
@@ -232,7 +232,7 @@ void demostrarEstructuras() {
 }
 
 // =============================================
-// 6. FUNCION PARA AGREGAR DATOS DE PRUEBA
+// 6. FUNCION PARA AGREGAR DATOS DE PRUEBA    -aqui meti a mi mismo como cliente de prueba haber si funciona, en los txt se vera reflejado
 // =============================================
 
 void agregarDatosDePrueba() {
@@ -261,7 +261,7 @@ void agregarDatosDePrueba() {
 }
 
 // =============================================
-// 7. FUNCION PRINCIPAL DEL AVANCE 2
+// 7. FUNCION PRINCIPAL DEL AVANCE 2  -resumen final de lo que se hace en las relaciones -
 // =============================================
 
 int main() {
