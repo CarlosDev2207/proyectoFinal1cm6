@@ -2,7 +2,17 @@
 ======================================
 
 Cliente #1:
-  ID: 1001
-  Nombre: Carlos Mendoza
-  Usuario: carlosm
+  ID: 0
+  Nombre: luis angel
+  Usuario: luis
+  -----------------------------
+Cliente #2:
+  ID: 1
+  Nombre: jose torres
+  Usuario: jose
+  -----------------------------
+Cliente #3:
+  ID: 2
+  Nombre: jared flores
+  Usuario: jared
   -----------------------------

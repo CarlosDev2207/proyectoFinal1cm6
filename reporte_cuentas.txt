@@ -1,6 +1,4 @@
 === REPORTE DE CUENTAS DE CREDITO ===
 ======================================
 
-Cuenta     Dueno ID   Adeudo       Limite       Meses          
---------------------------------------------------
-50001      1001       $5000.00    $20000.00   6              
+No hay cuentas registradas.

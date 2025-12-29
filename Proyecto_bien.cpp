@@ -1,40 +1,43 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include<windows.h>
 
 // =============================================
-// 1. DEFINIR ESTRUCTURAS DE DATOS
+// 1. DEFINIR ARREGLOS Y VARIABLES GLOBALES
 // =============================================
 
+#define MAX_CLIENTES 100
+#define MAX_CUENTAS 100
+// =============================================
+// 2. DEFINIR ESTRUCTURAS DE DATOS
+// =============================================
+
+// Estructura para Cuenta de Credito
+
+////Se modifico el codiog y ahora guarda todos los datos en el archivo "datos_clientes.dat"///////////////////
+typedef struct {
+    int num_cuenta;         // Numero unico de cuenta
+    float adeudo;           // Monto actual que se debe
+    float limite;           // Limite maximo de credito
+    int meses_inicial;      // Plazo: 3, 6 o 9 meses
+} CuentaCredito;
 // Estructura para Cliente
 typedef struct {
     int id_cliente;          // ID unico del cliente
     char nombre[100];        // Nombre completo
     char usuario[50];        // Para login
     char password[50];       // Para login
+    CuentaCredito cuentas[MAX_CUENTAS];///////////integracion de la estructura de cuentas//////////////
+    int ncuentas; 			//Numero de cunetas con las que cuenta el usuario//////
 } Cliente;
-
-// Estructura para Cuenta de Credito
-typedef struct {
-    int num_cuenta;         // Numero unico de cuenta
-    int id_dueno;           // RELACION: ID del cliente dueno
-    float adeudo;           // Monto actual que se debe
-    float limite;           // Limite maximo de credito
-    int meses_inicial;      // Plazo: 3, 6 o 9 meses
-} CuentaCredito;
-
-// =============================================
-// 2. DEFINIR ARREGLOS Y VARIABLES GLOBALES
-// =============================================
-
-#define MAX_CLIENTES 100
-#define MAX_CUENTAS 100
 
 Cliente lista_clientes[MAX_CLIENTES];   // Arreglo de clientes
 CuentaCredito lista_cuentas[MAX_CUENTAS]; // Arreglo de cuentas
 
 int total_clientes = 0;     // Cuantos clientes hay registrados
 int total_cuentas = 0;      // Cuantas cuentas hay registradas
+int toc=0;					/////////////////////////////////////////////////Variable para registrar cuentas
 
 // =============================================
 // 3. DEFINIR NOMBRES DE ARCHIVOS
@@ -59,10 +62,17 @@ void guardarClientesEnArchivo() {
     
     // Primero guardamos cuantos clientes hay
     fwrite(&total_clientes, sizeof(int), 1, archivo);
+    fwrite(&toc, sizeof(int),1,archivo);
     
     // Luego guardamos cada cliente
     for (int i = 0; i < total_clientes; i++) {
         fwrite(&lista_clientes[i], sizeof(Cliente), 1, archivo);
+        
+    }
+    //guardamos cada cuenta con la nueva variable
+        for (int a = 0; a < toc; a++) {
+        fwrite(&lista_cuentas[a], sizeof(Cliente), 1, archivo);
+
     }
     
     fclose(archivo);
@@ -80,18 +90,25 @@ void cargarClientesDesdeArchivo() {
     
     // Primero leemos cuantos clientes hay
     fread(&total_clientes, sizeof(int), 1, archivo);
+    fread(&toc, sizeof(int),1,archivo);
     
     // Luego leemos cada cliente
     for (int i = 0; i < total_clientes; i++) {
         fread(&lista_clientes[i], sizeof(Cliente), 1, archivo);
     }
+    ////cada cuenta con la nueva variable
+    for (int a = 0; a < toc; a++) {
+        fread(&lista_cuentas[a], sizeof(Cliente), 1, archivo);
+
+    }
+    
     
     fclose(archivo);
     printf("Clientes cargados desde '%s' (%d clientes)\n", 
            ARCHIVO_CLIENTES, total_clientes);
 }
 
-// Funcion para GUARDAR cuentas en archivo binario
+// Funcion para GUARDAR cuentas en archivo binario//////////////////ahora ya no se usa esta funcion
 void guardarCuentasEnArchivo() {
     FILE* archivo = fopen(ARCHIVO_CUENTAS, "wb");
     if (archivo == NULL) {
@@ -111,7 +128,7 @@ void guardarCuentasEnArchivo() {
     printf("Cuentas guardadas en '%s'\n", ARCHIVO_CUENTAS);
 }
 
-// Funcion para CARGAR cuentas desde archivo binario
+// Funcion para CARGAR cuentas desde archivo binario//////////////no se usa esta funcion
 void cargarCuentasDesdeArchivo() {
     FILE* archivo = fopen(ARCHIVO_CUENTAS, "rb");
     if (archivo == NULL) {
@@ -179,9 +196,8 @@ void generarReporteCuentas() {
         fprintf(archivo, "--------------------------------------------------\n");
         
         for (int i = 0; i < total_cuentas; i++) {
-            fprintf(archivo, "%-10d %-10d $%-10.2f $%-10.2f %-15d\n",
+            fprintf(archivo, "%-10d $%-10.2f $%-10.2f %-15d\n",
                     lista_cuentas[i].num_cuenta,
-                    lista_cuentas[i].id_dueno,
                     lista_cuentas[i].adeudo,
                     lista_cuentas[i].limite,
                     lista_cuentas[i].meses_inicial);
@@ -229,42 +245,209 @@ void demostrarEstructuras() {
         printf("   Tiene cuenta: Numero=%d, Adeudo=$%.2f\n",
                lista_cuentas[0].num_cuenta, lista_cuentas[0].adeudo);
     }
+    
 }
 
-// =============================================
-// 6. FUNCION PARA AGREGAR DATOS DE PRUEBA    -aqui meti a mi mismo como cliente de prueba haber si funciona, en los txt se vera reflejado
-// =============================================
 
-void agregarDatosDePrueba() {
-    printf("\n=== AGREGANDO DATOS DE PRUEBA ===\n");
-    
-    // Si no hay clientes, agregar uno de prueba
-    if (total_clientes == 0) {
-        lista_clientes[0].id_cliente = 1001;
-        strcpy(lista_clientes[0].nombre, "Carlos Mendoza");
-        strcpy(lista_clientes[0].usuario, "carlosm");
-        strcpy(lista_clientes[0].password, "clave123");
-        total_clientes = 1;
-        printf("Cliente de prueba agregado: %s\n", lista_clientes[0].nombre);
-    }
-    
-    // Si no hay cuentas, agregar una de prueba
-    if (total_cuentas == 0) {
-        lista_cuentas[0].num_cuenta = 50001;
-        lista_cuentas[0].id_dueno = 1001;  // RELACION: pertenece a cliente 1001
-        lista_cuentas[0].adeudo = 5000.0;
-        lista_cuentas[0].limite = 20000.0;
-        lista_cuentas[0].meses_inicial = 6;
-        total_cuentas = 1;
-        printf("Cuenta de prueba agregada: N%d\n", lista_cuentas[0].num_cuenta);
-    }
+//////////////////////////////////Menu cliente/////////////////////////////////////////////////////////////////
+
+
+void menu_cliente()
+{
+	
+	int id;
+	char p[50];
+	int op;
+	printf("========BIENVENIDO=======\n");
+	printf("ingresa tu ID:\n");
+	scanf("%d",&id);
+	printf("Bienvenido %s \n",lista_clientes[id].usuario);
+	printf("Ingresa tu contraseña: \n");
+	int c;///////////////////////////////////////////////////////////
+while ((c = getchar()) != '\n' && c != EOF);////////////////////////////////Limpieza de buffer para que no se trabe jejejeje//////////////////////////////////////
+	gets(p);	
+	if(strcmp(p,lista_clientes[id].password) !=0) /////Verificar si la contraseña es correcta//////////////
+	{
+		printf("Contraseña incorrecta cerrando el programa");
+		exit(0);
+	}
+	while(op!=4)
+	{
+			printf("========BIENVENIDO=======\n");
+			printf("Seleccione una opcion\n1- Registrar deposito \n2- Registrar compra \n3-Ver saldo de cuenta de credito \n4- Salir \n");
+			scanf("%d",&op);
+	switch(op)
+	{
+		case 1:
+			printf("Usuario %s",lista_clientes[id].usuario); //////////////Deposito
+			printf("Registrar deposito:");
+			break;
+		case 2:
+			printf("Usuario %s",lista_clientes[id].usuario);/////////////Compra
+			printf("Registrar compra \n");
+			break;
+		case 3:
+			printf("Usuario %s",lista_clientes[id].usuario);////////////Saldo de cuenta
+			printf("Ver saldo de cuenta de credito");
+			break;
+		case 4:
+			break;
+		default:
+			printf("opcion no valida");
+			break;
+	}
+		
+	}
+
 }
 
-// =============================================
-// 7. FUNCION PRINCIPAL DEL AVANCE 2  -resumen final de lo que se hace en las relaciones -
-// =============================================
 
-int main() {
+////////////////////////////////Menu administrador////////////////////////////////////////////////////7
+
+
+void menu_administrador()
+{
+		printf("========BIENVENIDO=======\n");
+	int op;
+	while(op!=5)
+	{
+	printf("========Administrador=======\n");
+	printf("Seleccione una opcion\n1- Registrar cliente \n2- Registrar cuenta \n3-Ver clientes \n4- Ver cuentas \n5-Regresar al menu\n");
+
+			scanf("%d",&op);
+int c;///////////////////////////////////////////////////////////
+while ((c = getchar()) != '\n' && c != EOF);////////////////////////////////Limpieza de buffer para que no se trabe jejejeje//////////////////////////////////////
+	switch(op)
+	{
+///////////////////////////////////////Registrar clientes////////////////////////////////////////////////////////////
+		case 1:
+			Cliente c1;
+			printf("Ingresa nombre del cliente completo\n");
+			gets(c1.nombre);
+			printf("Ingresa su usuario\n");
+			gets(c1.usuario);
+			printf("Ingresa su contraseña\n");
+			gets(c1.password);
+			printf("Su id es: %d \n",total_clientes);
+			lista_clientes[total_clientes].id_cliente=total_clientes;
+			lista_clientes[total_clientes].ncuentas=0;
+			strcpy(lista_clientes[total_clientes].nombre,c1.nombre);
+			strcpy(lista_clientes[total_clientes].usuario,c1.usuario);
+			strcpy(lista_clientes[total_clientes].password,c1.password);
+				total_clientes++;
+				guardarClientesEnArchivo();
+			break;
+/////////////////////////////////////Registrar cuentas///////////////////////////////////////////////////////////////////////
+		case 2:
+			int id;
+			int d;
+			printf("Ingrese el id del cliente:");
+			scanf("%d",&id);
+			if(id>total_clientes)
+			{
+				printf("Ese usuario no existe");
+				break;
+			}
+			printf("Usuario: %s \n",lista_clientes[id].usuario);
+			printf("¿Desea agregar una cuenta de credito al usuario?\n");
+			printf("Si(1), No(2)\n");
+			scanf("%d",&d);
+			if(d==1)
+			{
+				//////////////lista_clientes[id].ncuentas+=1;////// esta funcion se movió unas lineas abajo para no desperdiciar memoria del arreglo :p
+				lista_clientes[id].cuentas[lista_clientes[id].ncuentas].num_cuenta= 1000 + toc;
+				lista_clientes[id].cuentas[lista_clientes[id].ncuentas].limite=10000;
+
+				printf("Se a agredado al usuario: %s una cuneta de credito con numero: %d y un limite de 10,000 \n",lista_clientes[id].usuario, lista_clientes[id].cuentas[lista_clientes[id].ncuentas].num_cuenta);
+				
+				lista_clientes[id].ncuentas+=1;
+				
+				printf("El usuario cuenta con %d cuentas actualmente \n",lista_clientes[id].ncuentas);
+				
+			toc++;
+			guardarClientesEnArchivo();
+		}
+			break;
+////////////////////////////////////////Visualizar clientes//////////////////////////////////////////////////////////////////////////
+		case 3:
+			for(int i=0;i<total_clientes;i++)
+			{
+				printf("cliente id %d \n",lista_clientes[i].id_cliente);
+				printf("nombre %s \n",lista_clientes[i].nombre);
+				printf("usuario %s \n",lista_clientes[i].usuario);
+				printf("contraseña %s \n",lista_clientes[i].password);	
+			}
+			break;
+//////////////////////////////////////Visualizar cuentas de credito////////////////////////////////////////////////////////////////
+		case 4:
+				for(int i=0;i<total_clientes;i++)
+			{
+				printf("cliente numero %d \n",lista_clientes[i].id_cliente+1);
+				printf("Usuario: %s \n",lista_clientes[i].usuario);
+				printf("id: %d \n",lista_clientes[i].id_cliente);
+				printf("Cuentas del cliente: %d \n",lista_clientes[i].ncuentas);
+				/*for(int f=1;f<=lista_clientes[i].ncuentas;f++)
+					{
+						printf("Cuenta n: %d \n",f+1);
+						printf("Num . cuenta: %d \n",lista_clientes[i].cuentas[f].num_cuenta);  ////////Este for se modifico e
+																										simplemente iniciando desde 0 y no 1 
+						
+					}
+					*/
+					//////////////////////////////////versio correcta GG chavales//////////////////////////
+					for(int f=0;f<lista_clientes[i].ncuentas;f++)
+					{
+						printf("Cuenta n: %d \n",f+1);
+						printf("Num . cuenta: %d \n",lista_clientes[i].cuentas[f].num_cuenta);
+						
+					}
+				//////////////////////////////////////////////////////////////		
+			}
+			break;
+		case 5:
+			break;
+		default:
+			printf("Opción no disponible");
+			break;
+	}
+	}
+}
+
+
+//////////////////////////////////////////////Menu principal//////////////////////////////////////////////////////////////
+
+
+void menu_principal()
+{
+	int opcion;
+
+	while(opcion!=3)
+	{
+	printf("========BIENVENIDO=======\n");
+	printf("=========================\n");
+	printf("Seleccione una opcion\n1- Administracion \n2- Cliente \n3-Salir\n");
+	scanf("%d",&opcion);
+	switch(opcion)
+	{
+		case 1:
+			menu_administrador();
+			break;
+		case 2:
+			menu_cliente();
+			break;
+		case 3:
+		//////////////////////////////////////Recordad guardar chavales//////////////////////////////////////////////////
+			exit(0);
+			break;
+		default:
+			printf("Opcion no disponible \n");
+			break;
+	}
+}
+}
+
+int main(void)
+{
     printf("========================================\n");
     printf("  SISTEMA BANCARIO - AVANCE 2\n");
     printf("  Responsable: Carlos\n");
@@ -281,10 +464,7 @@ int main() {
     // =========================================
     // PASO 2: Agregar datos de prueba si no hay
     // =========================================
-    if (total_clientes == 0 || total_cuentas == 0) {
-        agregarDatosDePrueba();
-    }
-    
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
     // =========================================
     // PASO 3: Demostrar las estructuras
     // =========================================
@@ -307,7 +487,7 @@ int main() {
     // =========================================
     // PASO 6: Mostrar resumen
     // =========================================
-    printf("\n========================================\n");
+    printf("\n============================''============\n");
     printf("  RESUMEN DEL AVANCE 2 - COMPLETADO\n");
     printf("========================================\n");
     printf("Estructuras de datos definidas: 2\n");
@@ -323,5 +503,6 @@ int main() {
     printf("  - %s (reporte texto cuentas)\n", REPORTE_CUENTAS);
     printf("\n========================================\n");
     
-    return 0;
+    menu_principal();
+    return 0;	
 }
