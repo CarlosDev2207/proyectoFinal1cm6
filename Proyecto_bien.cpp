@@ -22,6 +22,7 @@ typedef struct {
     float limite;           // Limite maximo de credito
     int meses_inicial;      // Plazo: 3, 6 o 9 meses
 } CuentaCredito;
+
 // Estructura para Cliente
 typedef struct {
     int id_cliente;          // ID unico del cliente
@@ -262,13 +263,13 @@ void menu_cliente()
 	printf("ingresa tu ID:\n");
 	scanf("%d",&id);
 	printf("Bienvenido %s \n",lista_clientes[id].usuario);
-	printf("Ingresa tu contraseña: \n");
+	printf("Ingresa tu contraseï¿½a: \n");
 	int c;///////////////////////////////////////////////////////////
 while ((c = getchar()) != '\n' && c != EOF);////////////////////////////////Limpieza de buffer para que no se trabe jejejeje//////////////////////////////////////
 	gets(p);	
-	if(strcmp(p,lista_clientes[id].password) !=0) /////Verificar si la contraseña es correcta//////////////
+	if(strcmp(p,lista_clientes[id].password) !=0) /////Verificar si la contraseï¿½a es correcta//////////////
 	{
-		printf("Contraseña incorrecta cerrando el programa");
+		printf("Contraseï¿½a incorrecta cerrando el programa");
 		exit(0);
 	}
 	while(op!=4)
@@ -326,7 +327,7 @@ while ((c = getchar()) != '\n' && c != EOF);////////////////////////////////Limp
 			gets(c1.nombre);
 			printf("Ingresa su usuario\n");
 			gets(c1.usuario);
-			printf("Ingresa su contraseña\n");
+			printf("Ingresa su contraseï¿½a\n");
 			gets(c1.password);
 			printf("Su id es: %d \n",total_clientes);
 			lista_clientes[total_clientes].id_cliente=total_clientes;
@@ -349,12 +350,12 @@ while ((c = getchar()) != '\n' && c != EOF);////////////////////////////////Limp
 				break;
 			}
 			printf("Usuario: %s \n",lista_clientes[id].usuario);
-			printf("¿Desea agregar una cuenta de credito al usuario?\n");
+			printf("ï¿½Desea agregar una cuenta de credito al usuario?\n");
 			printf("Si(1), No(2)\n");
 			scanf("%d",&d);
 			if(d==1)
 			{
-				//////////////lista_clientes[id].ncuentas+=1;////// esta funcion se movió unas lineas abajo para no desperdiciar memoria del arreglo :p
+				//////////////lista_clientes[id].ncuentas+=1;////// esta funcion se moviï¿½ unas lineas abajo para no desperdiciar memoria del arreglo :p
 				lista_clientes[id].cuentas[lista_clientes[id].ncuentas].num_cuenta= 1000 + toc;
 				lista_clientes[id].cuentas[lista_clientes[id].ncuentas].limite=10000;
 
@@ -375,7 +376,7 @@ while ((c = getchar()) != '\n' && c != EOF);////////////////////////////////Limp
 				printf("cliente id %d \n",lista_clientes[i].id_cliente);
 				printf("nombre %s \n",lista_clientes[i].nombre);
 				printf("usuario %s \n",lista_clientes[i].usuario);
-				printf("contraseña %s \n",lista_clientes[i].password);	
+				printf("contraseï¿½a %s \n",lista_clientes[i].password);	
 			}
 			break;
 //////////////////////////////////////Visualizar cuentas de credito////////////////////////////////////////////////////////////////
@@ -407,7 +408,7 @@ while ((c = getchar()) != '\n' && c != EOF);////////////////////////////////Limp
 		case 5:
 			break;
 		default:
-			printf("Opción no disponible");
+			printf("Opciï¿½n no disponible");
 			break;
 	}
 	}
@@ -502,6 +503,8 @@ int main(void)
     printf("  - %s (reporte texto clientes)\n", REPORTE_CLIENTES);
     printf("  - %s (reporte texto cuentas)\n", REPORTE_CUENTAS);
     printf("\n========================================\n");
+
+    printf("\n Hola Avance 3");
     
     menu_principal();
     return 0;	
