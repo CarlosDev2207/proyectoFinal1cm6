@@ -16,3 +16,8 @@ Cliente #3:
   Nombre: jared flores
   Usuario: jared
   -----------------------------
+Cliente #4:
+  ID: 3
+  Nombre: Juan
+  Usuario: Juan
+  -----------------------------
