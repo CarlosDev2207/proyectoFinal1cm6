@@ -1,23 +1,53 @@
-=== REPORTE DE CLIENTES DEL BANCO ===
-======================================
+=====================================
+   REPORTE DE CLIENTES DEL BANCO    
+=====================================
+Fecha: Sistema Bancario v1.0
+=====================================
 
-Cliente #1:
-  ID: 0
-  Nombre: luis angel
-  Usuario: luis
-  -----------------------------
-Cliente #2:
-  ID: 1
-  Nombre: jose torres
-  Usuario: jose
-  -----------------------------
-Cliente #3:
-  ID: 2
-  Nombre: jared flores
-  Usuario: jared
-  -----------------------------
-Cliente #4:
-  ID: 3
-  Nombre: Juan
-  Usuario: Juan
-  -----------------------------
+Total de clientes registrados: 5
+
+┌─────────────────────────────────┐
+│ Cliente #001                    │
+├─────────────────────────────────┤
+│ ID:       0000                  │
+│ Nombre:   luis angel           │
+│ Usuario:  luis                 │
+│ Cuentas:  05                    │
+└─────────────────────────────────┘
+
+┌─────────────────────────────────┐
+│ Cliente #002                    │
+├─────────────────────────────────┤
+│ ID:       0001                  │
+│ Nombre:   jose torres          │
+│ Usuario:  jose                 │
+│ Cuentas:  01                    │
+└─────────────────────────────────┘
+
+┌─────────────────────────────────┐
+│ Cliente #003                    │
+├─────────────────────────────────┤
+│ ID:       0002                  │
+│ Nombre:   jared flores         │
+│ Usuario:  jared                │
+│ Cuentas:  03                    │
+└─────────────────────────────────┘
+
+┌─────────────────────────────────┐
+│ Cliente #004                    │
+├─────────────────────────────────┤
+│ ID:       0003                  │
+│ Nombre:   Juan                 │
+│ Usuario:  Juan                 │
+│ Cuentas:  00                    │
+└─────────────────────────────────┘
+
+┌─────────────────────────────────┐
+│ Cliente #005                    │
+├─────────────────────────────────┤
+│ ID:       0004                  │
+│ Nombre:   Emilio Damian Noyola Gomez │
+│ Usuario:  EmilioNoyola         │
+│ Cuentas:  01                    │
+└─────────────────────────────────┘
+
