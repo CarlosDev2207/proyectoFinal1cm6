@@ -1312,17 +1312,17 @@ void menu_principal()
         mostrarEncabezado("SISTEMA BANCARIO v2.0");
         
         printf("%s", CYAN);
-        printf("    ╔═══════════════════════════════════╗\n");
-        printf("    ║     🏦 BANCO DIGITAL 🏦           ║\n");
-        printf("    ║   Su banco de confianza           ║\n");
-        printf("    ╚═══════════════════════════════════╝\n");
+        printf("    ╔════════════════════════════╗\n");
+        printf("    ║       BANCO DIGITAL        ║\n");
+        printf("    ║   Su banco de confianza    ║\n");
+        printf("    ╚════════════════════════════╝\n");
         printf("%s\n", RESET);
         
         printf("%sMENÚ PRINCIPAL:%s\n\n", BOLD, RESET);
-        printf("  %s[1]%s 🔐 Acceso Administrativo\n", CYAN, RESET);
-        printf("  %s[2]%s 👤 Portal del Cliente\n", CYAN, RESET);
-        printf("  %s[3]%s 📊 Ver Estructuras de Datos\n", CYAN, RESET);
-        printf("  %s[4]%s 🚪 Salir del Sistema\n\n", RED, RESET);
+        printf("  %s[1]%s  Acceso Administrativo\n", CYAN, RESET);
+        printf("  %s[2]%s  Portal del Cliente\n", CYAN, RESET);
+        printf("  %s[3]%s  Ver Estructuras de Datos\n", CYAN, RESET);
+        printf("  %s[4]%s  Salir del Sistema\n\n", RED, RESET);
         
         printf("%sSeleccione una opción:%s ", BOLD, RESET);
         scanf("%d", &opcion);
@@ -1348,11 +1348,11 @@ void menu_principal()
             guardarClientesEnArchivo();
             
             printf("\n%s", GREEN);
-            printf("    ╔═══════════════════════════════════╗\n");
-            printf("    ║   Gracias por usar nuestro        ║\n");
-            printf("    ║        Sistema Bancario           ║\n");
-            printf("    ║      ¡Hasta pronto! 👋            ║\n");
-            printf("    ╚═══════════════════════════════════╝\n");
+            printf("    ╔════════════════════════════════╗\n");
+            printf("    ║   Gracias por usar nuestro     ║\n");
+            printf("    ║        Sistema Bancario        ║\n");
+            printf("    ║         ¡Hasta pronto!         ║\n");
+            printf("    ╚════════════════════════════════╝\n");
             printf("%s\n", RESET);
             
             exit(0);
