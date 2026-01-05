@@ -26,7 +26,7 @@
 
 /*
     Estructura para Cuenta de Credito
-    Los datos se guardan en el archivo "datos_cuentas.dat"
+    Los datos se guardan en el archivo "datos_clientes.dat"
 */
 typedef struct
 {
@@ -60,7 +60,6 @@ int toc = 0;            // Variable para registrar cuentas (contador global para
 // =============================================
 
 const char *ARCHIVO_CLIENTES = "datos_clientes.dat";
-const char *ARCHIVO_CUENTAS = "datos_cuentas.dat";
 const char *REPORTE_CLIENTES = "reporte_clientes.txt";
 const char *REPORTE_CUENTAS = "reporte_cuentas.txt";
 
@@ -162,7 +161,6 @@ void guardarClientesEnArchivo()
     }
 
     fclose(archivo);
-    // Mensaje silencioso, no mostrar cada vez que se guarda
 }
 
 // Funcion para CARGAR clientes desde archivo binario
@@ -206,20 +204,6 @@ void cargarClientesDesdeArchivo()
     fclose(archivo);
 }
 
-// Funcion para GUARDAR cuentas en archivo binario
-void guardarCuentasEnArchivo()
-{
-    // Las cuentas viven dentro de cada cliente, NO se usa archivo de cuentas separado
-    (void)ARCHIVO_CUENTAS; // evitar warning de variable sin usar
-}
-
-// Funcion para CARGAR cuentas desde archivo binario
-void cargarCuentasDesdeArchivo()
-{
-    // Las cuentas viven dentro de cada cliente, NO se usa archivo de cuentas separado
-    (void)ARCHIVO_CUENTAS; // evitar warning de variable sin usar
-}
-
 // Funcion para GENERAR REPORTE de clientes en texto
 void generarReporteClientes()
 {
@@ -235,7 +219,7 @@ void generarReporteClientes()
     fprintf(archivo, "=====================================\n");
     fprintf(archivo, "   REPORTE DE CLIENTES DEL BANCO    \n");
     fprintf(archivo, "=====================================\n");
-    fprintf(archivo, "Fecha: Sistema Bancario v1.0\n");
+    fprintf(archivo, "    Fecha: Sistema Bancario v1.0\n");
     fprintf(archivo, "=====================================\n\n");
 
     if (total_clientes == 0)
@@ -250,7 +234,7 @@ void generarReporteClientes()
         for (i = 0; i < total_clientes; i++)
         {
             fprintf(archivo, "┌─────────────────────────────────┐\n");
-            fprintf(archivo, "│ Cliente #%03d                    │\n", i + 1);
+            fprintf(archivo, "│ Cliente #%03d                   │\n", i + 1);
             fprintf(archivo, "├─────────────────────────────────┤\n");
             fprintf(archivo, "│ ID:       %04d                  │\n", lista_clientes[i].id_cliente);
             fprintf(archivo, "│ Nombre:   %-20s │\n", lista_clientes[i].nombre);
@@ -282,7 +266,7 @@ void generarReporteCuentas()
     fprintf(archivo, "==========================================\n");
     fprintf(archivo, "    REPORTE DE CUENTAS DE CREDITO        \n");
     fprintf(archivo, "==========================================\n");
-    fprintf(archivo, "Fecha: Sistema Bancario v1.0\n");
+    fprintf(archivo, "    Fecha: Sistema Bancario v1.0\n");
     fprintf(archivo, "==========================================\n\n");
 
     total_cuentas = 0;
@@ -382,7 +366,7 @@ void menu_cliente()
 
     mostrarEncabezado("BANCA EN LÍNEA - ACCESO CLIENTE");
 
-    // Solicitar nombre de usuario en lugar de ID
+    // Solicitar nombre de usuario.
     printf("%sIngrese su nombre de usuario:%s ", BOLD, RESET);
     scanf("%49s", usuario_input);
 
